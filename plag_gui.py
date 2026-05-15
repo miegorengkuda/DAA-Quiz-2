@@ -16,12 +16,21 @@ def upload_file(text_input, type):
         except Exception as e:
             messagebox.showerror("Error", f"Fail read file: {e}")
 
+
+def test_print_output(output):
+    test_text = "this is test print output\nthis should show up in result textbox"
+    output.delete("1.0", 'end-1c')
+    output.insert("1.0", test_text)
+    
+
 def run_app():
+    # INIT
     root = tk.Tk()
     root.title("Plagiarism Detection Tool")
     root.geometry("1200x600")
     
 
+    # FRAME INPUT
     frame_input = tk.Frame(root, padx=10, pady=5)
     frame_input.pack(fill="both", expand=True)
     
@@ -38,6 +47,7 @@ def run_app():
     text_input_b.pack(side="top", fill="x", padx=5, expand=True)
 
 
+    # FRAME BUTTONS
     frame_buttons = tk.Frame(root, padx=10)
     frame_buttons.pack(fill="x")
     
@@ -52,13 +62,12 @@ def run_app():
     btn_upload_b.pack(side="left", padx=5)
     
     btn_process = tk.Button(frame_buttons, text="Process Files", bg="lightblue", 
-                            # command=lambda: process_code(text_input, tree_output)
-                            # !!LAKUKAN PROSES FUNCTION HERE
+                            command=lambda: test_print_output(text_output)
                             )
     btn_process.pack(side="right", padx=5)
     
 
-
+    # FRAME OUTPUT
     frame_output = tk.Frame(root, padx=10, pady=10)
     frame_output.pack(fill="both", expand=True)
     
