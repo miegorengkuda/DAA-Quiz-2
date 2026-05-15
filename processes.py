@@ -27,8 +27,15 @@ def remove_stopword(tokens, stopwords=DEFAULT_STOPWORDS):
     return [t for t in tokens if t not in stopwords]
 
 LEMMA_DICT = {
-    'jumps': 'jump',
-    'sang': 'sing'
+    'lenses': 'lens',
+    'sailors': 'sailor',
+    'efficiently': 'efficient',
+    'stood': 'stand',
+    'weighed': 'weigh',
+    'weirder': 'weird',
+    'colonial': 'colony',
+    'colonies': 'colony',
+    'stubbornness': 'stubborn'
 }
 
 def lemmatize(tokens, lemma_dict=LEMMA_DICT):
