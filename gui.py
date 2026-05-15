@@ -1,6 +1,6 @@
 import tkinter as tk
 from tkinter import ttk, filedialog, messagebox
-import lcs_process
+import processes as p
 import time
 
 def upload_file(text_input, type):
@@ -25,26 +25,26 @@ def test_print_output(input, output):
 
 
 def process_files(s1, s2, output):
-    str1 = str(s1)
-    str2 = str(s2)
     start = time.perf_counter()
-    lcs_value = lcs_process.lcs(s1, s2)
+    tokens1 = p.preprocess(s1)
+    tokens2 = p.preprocess(s2)
+    lcs_value = p.lcs_length(tokens1, tokens2)
+    sim_score = p.similarity_score(tokens1, tokens2)
     end = time.perf_counter()
-    runtime = end-start
-    max_length = max(len(s1), len(s2)) + 1
+    runtime = (end-start)
 
     output_text = (
         "str1 = " + s1 + "\n"
         "str2 = " + s2 + "\n"
-        "LCS = " + str(lcs_value) + "\n"
-        "Runtime = " + str(runtime) + "\n"
-        "Score = " + str(lcs_value/max_length) + "\n"
+        "LCS = " + f"{lcs_value}" + "\n"
+        "Runtime = " + f"{runtime:.10f}" + " seconds\n"
+        "Score = " + f"{sim_score}" + "\n"
         )
     output.delete("1.0", 'end-1c')
     output.insert("1.0", output_text)
     
 
-def run_app():
+def run_gui():
     # INIT
     root = tk.Tk()
     root.title("Plagiarism Detection Tool")
@@ -72,24 +72,18 @@ def run_app():
     frame_buttons = tk.Frame(root, padx=10)
     frame_buttons.pack(fill="x")
     
-    btn_upload_a = tk.Button(frame_buttons, text="Upload File A", 
-                           command=lambda: upload_file(text_input_a, "A")
-                           )
+    btn_upload_a = tk.Button(frame_buttons, text="Upload File A", command=lambda: upload_file(text_input_a, "A"))
     btn_upload_a.pack(side="left", padx=5)
 
-    btn_upload_b = tk.Button(frame_buttons, text="Upload File B", 
-                           command=lambda: upload_file(text_input_b, "B")
-                           )
+    btn_upload_b = tk.Button(frame_buttons, text="Upload File B", command=lambda: upload_file(text_input_b, "B"))
     btn_upload_b.pack(side="left", padx=5)
     
-    input_from_a = "alp"
-    input_from_b = text_input_b.get('1.0', 'end-1c')
-    
     btn_process = tk.Button(frame_buttons, text="Process Files", bg="lightblue", 
-                            # command=lambda: process_files(input_from_a, input_from_b, text_output)
-                            command=lambda: test_print_output(input_from_a, text_output)
-                            
-                            )
+    command=lambda: process_files(text_input_a.get('1.0', 'end-1c'), text_input_b.get('1.0', 'end-1c'), text_output)
+
+    #tpo is to print first parameter
+    # command=lambda: test_print_output(text_input_a.get('1.0', 'end-1c'), text_output)               
+    )
     btn_process.pack(side="right", padx=5)
     
 
@@ -113,4 +107,4 @@ def run_app():
 
 
 if __name__ == "__main__":
-    run_app()
+    run_gui()

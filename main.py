@@ -1,6 +1,6 @@
 import sys
 import logging
-import plag_gui
+import gui
 
 def tokenize(text):
     tokens = []
