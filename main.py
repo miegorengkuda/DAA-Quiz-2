@@ -29,8 +29,19 @@ DEFAULT_STOPWORDS = [
 def remove_stopword(tokens, stopwords=DEFAULT_STOPWORDS):
     return [t for t in tokens if t not in stopwords]
 
-def lemmatize():
-    pass
+LEMMA_DICT = {
+    'jumps': 'jump',
+    'sang': 'sing'
+}
+
+def lemmatize(tokens, lemma_dict=LEMMA_DICT):
+    return [lemma_dict.get(t, t) for t in tokens]
+
+def preprocess(text):
+    tokens = tokenize(text)
+    tokens = remove_stopword(tokens)
+    tokens = lemmatize(tokens)
+    return tokens
 
 def lcs():
     pass
