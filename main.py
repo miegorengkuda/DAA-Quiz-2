@@ -18,8 +18,16 @@ def tokenize(text):
 
     return tokens
 
-def remove_stop_word(tokens):
-    tokens.remove()
+DEFAULT_STOPWORDS = [
+    "the", "a", "an",
+    "is", "are", "was", "were",
+    "and", "or", "but",
+    "in", "on", "at",
+    "to", "of", "for"
+]
+
+def remove_stopword(tokens, stopwords=DEFAULT_STOPWORDS):
+    return [t for t in tokens if t not in stopwords]
 
 def lemmatize():
     pass
