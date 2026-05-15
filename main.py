@@ -52,7 +52,7 @@ def lcs():
 # TODO: handle path semantic errors
 # TODO: handle file not found
 def main():
-    if len(sys.argv == 2):
+    if len(sys.argv) == 2:
         path1 = sys.argv[1]
         path2 = sys.argv[2]
     else:
