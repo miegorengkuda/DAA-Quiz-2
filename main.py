@@ -65,7 +65,7 @@ def similarity_score(tokens1, tokens2):
 # TODO: handle path semantic errors
 # TODO: handle file not found
 def main():
-    if len(sys.argv) == 2:
+    if len(sys.argv) == 3:
         path1 = sys.argv[1]
         path2 = sys.argv[2]
     else:
@@ -76,6 +76,10 @@ def main():
 
     tokens1 = preprocess(text1)
     tokens2 = preprocess(text2)
+
+    score = similarity_score(tokens1, tokens2) * 100
+    
+    print(f'similarity: {score:.2f} %')
 
 if __name__ == '__main__':
     main()
