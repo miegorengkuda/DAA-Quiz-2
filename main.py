@@ -6,7 +6,7 @@ def tokenize(text):
     current = ''
 
     for ch in text.lower():
-        if ch.isalnum():
+        if ch.isalnum() or ch == "'":
             current += ch
         else:
             if current:
