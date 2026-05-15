@@ -43,11 +43,24 @@ def preprocess(text):
     tokens = lemmatize(tokens)
     return tokens
 
-# TODO: implement LCS
-def lcs():
-    pass
+def lcs_length(tokens1, tokens2):
+    m = len(tokens1)
+    n = len(tokens2)
 
-# TODO: make result evaluation function
+    dp = [[0] * (n + 1) for _ in range(m + 1)]
+
+    for i in range(1, m + 1):
+        for j in range(1, n + 1):
+            if tokens1[i - 1] == tokens2[j - 1]:
+                dp[i][j] = dp[i - 1][j - 1] + 1
+            else:
+                dp[i][j] = max(dp[i - 1][j], dp[i][j - 1])
+
+    return dp[m][n]
+
+def similarity_score(tokens1, tokens2):
+    lcs = lcs_length(tokens1, tokens2)
+    return (2 * lcs) / (len(tokens1) + len(tokens2))
 
 # TODO: handle path semantic errors
 # TODO: handle file not found
@@ -58,12 +71,11 @@ def main():
     else:
         path1 = input('text1 path:')
         path2 = input('text2 path:')
-    f1 = open(path1)
-    f2 = open(path2)
-    text1 = f1.read()
-    text2 = f2.read()
-    f1.close()
-    f2.close()
+    text1 = open(path1).read()
+    text2 = open(path2).read()
+
+    tokens1 = preprocess(text1)
+    tokens2 = preprocess(text2)
 
 if __name__ == '__main__':
     main()
