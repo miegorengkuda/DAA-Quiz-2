@@ -31,14 +31,12 @@ def process_files(s1, s2, output):
     lcs_value = p.lcs_length(tokens1, tokens2)
     sim_score = p.similarity_score(tokens1, tokens2)
     end = time.perf_counter()
-    runtime = (end-start)
+    runtime = (end-start) * 1000
 
     output_text = (
-        "str1 = " + s1 + "\n"
-        "str2 = " + s2 + "\n"
-        "LCS = " + f"{lcs_value}" + "\n"
-        "Runtime = " + f"{runtime:.10f}" + " seconds\n"
-        "Score = " + f"{sim_score}" + "\n"
+        "LCS = " + f"{lcs_value} \n"
+        "Runtime = " + f"{runtime:.10f} ms\n"
+        "Score = " + f"{sim_score*100:.2f}% \n"
         )
     output.delete("1.0", 'end-1c')
     output.insert("1.0", output_text)
@@ -48,24 +46,35 @@ def run_gui():
     # INIT
     root = tk.Tk()
     root.title("Plagiarism Detection Tool")
-    root.geometry("1200x600")
+    root.geometry("800x600")
     
 
     # FRAME INPUT
-    frame_input = tk.Frame(root, padx=10, pady=5)
+    frame_input = tk.Frame(root, padx=10, pady=10)
     frame_input.pack(fill="both", expand=True)
     
     label_input_a = tk.Label(frame_input, text="File A", font=("Arial", 10, "bold"))
     label_input_a.pack(anchor="w")
 
-    text_input_a = tk.Text(frame_input, height=10)
-    text_input_a.pack(side="top", fill="x", padx=5, expand=True)
-    
+    text_input_a = tk.Text(frame_input, height=20)
+    scrollbar_a = ttk.Scrollbar(text_input_a, orient="vertical", command=text_input_a.yview)
+    text_input_a.configure(yscroll=scrollbar_a.set)
+
+    text_input_a.pack(side="top", fill="both", padx=5, expand=True)
+    scrollbar_a.pack(side="right", fill="y")
+
+
     label_input_b = tk.Label(frame_input, text="File B", font=("Arial", 10, "bold"))
     label_input_b.pack(anchor="w")
 
-    text_input_b = tk.Text(frame_input, height=10)
+    text_input_b = tk.Text(frame_input, height=20)
     text_input_b.pack(side="top", fill="x", padx=5, expand=True)
+
+    scrollbar_b = ttk.Scrollbar(text_input_b, orient="vertical", command=text_input_b.yview)
+    text_input_b.configure(yscroll=scrollbar_b.set)
+
+    text_input_b.pack(side="top", fill="both", padx=5, expand=True)
+    scrollbar_b.pack(side="right", fill="y")
 
 
     # FRAME BUTTONS
@@ -96,13 +105,12 @@ def run_gui():
 
     text_output = tk.Text(frame_output, height=10)
 
-    scrollbar = ttk.Scrollbar(frame_output, orient="vertical", command=text_output.yview)
-    text_output.configure(yscroll=scrollbar.set)
+    scrollbar_out = ttk.Scrollbar(text_output, orient="vertical", command=text_output.yview)
+    text_output.configure(yscroll=scrollbar_out.set)
 
     text_output.pack(side="left", fill="both", padx=5, expand=True)
-    scrollbar.pack(side="right", fill="y")
+    scrollbar_out.pack(side="right", fill="y")
     
-
     root.mainloop()
 
 
