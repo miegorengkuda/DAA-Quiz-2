@@ -1,5 +1,6 @@
 import sys
 import logging
+import plag_gui
 
 def tokenize(text):
     tokens = []
@@ -44,26 +45,28 @@ def preprocess(text):
     return tokens
 
 # TODO: implement LCS
-def lcs():
-    pass
+# def lcs():
+#     pass
 
 # TODO: make result evaluation function
 
 # TODO: handle path semantic errors
 # TODO: handle file not found
 def main():
-    if len(sys.argv) == 2:
-        path1 = sys.argv[1]
-        path2 = sys.argv[2]
-    else:
-        path1 = input('text1 path:')
-        path2 = input('text2 path:')
-    f1 = open(path1)
-    f2 = open(path2)
-    text1 = f1.read()
-    text2 = f2.read()
-    f1.close()
-    f2.close()
+    # if len(sys.argv) == 2:
+    #     path1 = sys.argv[1]
+    #     path2 = sys.argv[2]
+    # else:
+    #     path1 = input('text1 path:')
+    #     path2 = input('text2 path:')
+    # f1 = open(path1)
+    # f2 = open(path2)
+    # text1 = f1.read()
+    # text2 = f2.read()
+    # f1.close()
+    # f2.close()
+
+    plag_gui.run_app()
 
 if __name__ == '__main__':
     main()

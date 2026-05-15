@@ -1,5 +1,7 @@
 import tkinter as tk
 from tkinter import ttk, filedialog, messagebox
+import lcs_process
+import time
 
 def upload_file(text_input, type):
     file_path = filedialog.askopenfilename(
@@ -17,10 +19,29 @@ def upload_file(text_input, type):
             messagebox.showerror("Error", f"Fail read file: {e}")
 
 
-def test_print_output(output):
-    test_text = "this is test print output\nthis should show up in result textbox"
+def test_print_output(input, output):
     output.delete("1.0", 'end-1c')
-    output.insert("1.0", test_text)
+    output.insert("1.0", input)
+
+
+def process_files(s1, s2, output):
+    str1 = str(s1)
+    str2 = str(s2)
+    start = time.perf_counter()
+    lcs_value = lcs_process.lcs(s1, s2)
+    end = time.perf_counter()
+    runtime = end-start
+    max_length = max(len(s1), len(s2)) + 1
+
+    output_text = (
+        "str1 = " + s1 + "\n"
+        "str2 = " + s2 + "\n"
+        "LCS = " + str(lcs_value) + "\n"
+        "Runtime = " + str(runtime) + "\n"
+        "Score = " + str(lcs_value/max_length) + "\n"
+        )
+    output.delete("1.0", 'end-1c')
+    output.insert("1.0", output_text)
     
 
 def run_app():
@@ -61,8 +82,13 @@ def run_app():
                            )
     btn_upload_b.pack(side="left", padx=5)
     
+    input_from_a = "alp"
+    input_from_b = text_input_b.get('1.0', 'end-1c')
+    
     btn_process = tk.Button(frame_buttons, text="Process Files", bg="lightblue", 
-                            command=lambda: test_print_output(text_output)
+                            # command=lambda: process_files(input_from_a, input_from_b, text_output)
+                            command=lambda: test_print_output(input_from_a, text_output)
+                            
                             )
     btn_process.pack(side="right", padx=5)
     
